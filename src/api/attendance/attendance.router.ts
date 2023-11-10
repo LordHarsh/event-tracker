@@ -1,11 +1,11 @@
 import {Router} from "express";
 import { validateRequest } from "../../shared/middlewares/valiator";
 import { attendStartSchema } from "./attendance.schema";
-import { attendStart } from "./attendance.controller";
+import { attendStart, getCount } from "./attendance.controller";
 
 export default (): Router => {
     const app = Router();
-    app.post('/attendStart', validateRequest('body', attendStartSchema), attendStart);
-    app.get('/count', )
+    app.post('/start', validateRequest('body', attendStartSchema), attendStart);
+    app.get('/count', getCount)
     return app;
 };
