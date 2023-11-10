@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { attendStartService } from './attendance.service';
+import { attendStartService, getCountService } from './attendance.service';
 
 export const attendStart = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {

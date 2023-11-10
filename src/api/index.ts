@@ -7,6 +7,6 @@ export default (): Router => {
     const app = Router();
     app.use('/test', testRouter());
     app.use('/attandance', attendanceRouter());
-    app.use('/register', registerRouter;
+    app.use('/register', registerRouter());
     return app;
 };
