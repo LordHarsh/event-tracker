@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "tsc-watch --onSuccess \"node ./build/index.js\"",
     "build": "tsc",
-    "start": "next start",
+    "start": "node ./build/index.js",
     "lint": "eslint . --ext .ts"
   },
   "dependencies": {
