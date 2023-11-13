@@ -9,6 +9,6 @@ export const registerService = async (email: string, name: String, registrationN
         await collection.updateOne({ email: email }, { $set: { name, registrationNumber, branch, mobile } });
         return;
     }
-    await collection.insertOne({ email, name, registrationNumber });
+    await collection.insertOne({ email, name, registrationNumber, branch, mobile });
     return;
 }
