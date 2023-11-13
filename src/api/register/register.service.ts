@@ -2,13 +2,13 @@ import { ObjectId } from 'mongodb';
 import database from '../../loaders/mongo';
 import config from "../../config";
 
-export const registerService = async (email: string, name: String, registerationNumber: String): Promise<void> => {
+export const registerService = async (email: string, name: String, registrationNumber: String, branch: String, mobile: String): Promise<void> => {
     const collection = (await database()).collection(config.collectionName);
     const exists = await collection.findOne({ email: email });
     if (exists) {
-        await collection.updateOne({ email: email }, { $set: { name, registerationNumber } });
+        await collection.updateOne({ email: email }, { $set: { name, registrationNumber, branch, mobile } });
         return;
     }
-    await collection.insertOne({ email, name, registerationNumber });
+    await collection.insertOne({ email, name, registrationNumber, branch, mobile });
     return;
 }
