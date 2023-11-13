@@ -14,4 +14,9 @@ export default {
     api: {
         prefix: '/api',
     },
+    sheets: {
+        key_url: process.env.SHEETS_KEY_URL,
+        key_path: process.env.KEY_PATH,
+        id:  process.env.SHEETS_ID,
+    }
 }
