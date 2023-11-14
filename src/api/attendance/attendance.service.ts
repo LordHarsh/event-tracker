@@ -12,7 +12,7 @@ export const attendStartService = async (id: string, email: string): Promise<voi
     if (exists.presentStart) {
         throw new Error('Already marked present');
     }
-    const count = await collection.updateOne({ _id: new ObjectId(id), email: email },  { $set: { presentStart: true } });
+    await collection.updateOne({ _id: new ObjectId(id), email: email },  { $set: { presentStart: true } });
     const data = await collection.findOne({ _id: new ObjectId(id), email: email });
     await updateSheet(data);
     return
