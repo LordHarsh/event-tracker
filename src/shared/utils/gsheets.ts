@@ -10,7 +10,7 @@ export const updateSheet = async (data) => {
   const spreadsheetId = process.env.SHEETS_ID;
   const valueInputOption = 'USER_ENTERED';
   const resource = {
-    values: [[data._id, data.name, data.email, data.mobile, data.branch, data.RegistrationNumber]],
+    values: [[data._id, data.name, data.email, data.mobile, data.branch, data.registrationNumber]],
   };
   const lastRow = await googleSheets.spreadsheets.values.get({
     spreadsheetId,
