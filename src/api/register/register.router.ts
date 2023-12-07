@@ -5,7 +5,7 @@ import { onspotRegister, register } from "./register.controller";
 
 export default (): Router => {
     const app = Router();
-    app.post("/", validateRequest('body', registerSchema), register);
-    app.post("/onspot", validateRequest('body', registerSchema), onspotRegister);
+    app.post("/:eventName", validateRequest('body', registerSchema), register);
+    app.post("/:eventName/onspot", validateRequest('body', registerSchema), onspotRegister);
     return app;
 };

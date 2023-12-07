@@ -3,8 +3,8 @@ import database from '../../loaders/mongo';
 import config from "../../config";
 import { updateSheet } from '../../shared/utils/gsheets';
 
-export const attendStartService = async (id: string, email: string): Promise<void> => {
-    const collection = (await database()).collection(config.collectionName);
+export const attendStartService = async (id: string, email: string, event: any): Promise<void> => {
+    const collection = (await database()).collection(event.name+"-registrations");
     const exists = await collection.findOne({ _id: new ObjectId(id), email: email });
     if (!exists) {
         throw new Error('Not in database');
@@ -18,8 +18,8 @@ export const attendStartService = async (id: string, email: string): Promise<voi
     return
 };
 
-export const getCountService = async (): Promise<number> => {
-    const collection = (await database()).collection(config.collectionName);
+export const getCountService = async (event: any): Promise<number> => {
+    const collection = (await database()).collection(event.name+"-registrations");
     const count = (await collection.find({ presentStart: true }).toArray()).length;
     return count;
 };

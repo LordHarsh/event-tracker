@@ -1,4 +1,5 @@
 import { google } from 'googleapis';
+import config from '../../config';
 
 export const updateSheet = async (data) => {
   const auth = new google.auth.GoogleAuth({
@@ -7,7 +8,7 @@ export const updateSheet = async (data) => {
   });
   const client = await auth.getClient();
   const googleSheets = google.sheets({ version: 'v4', auth: client as any });
-  const spreadsheetId = process.env.SHEETS_ID;
+  const spreadsheetId = config.eventSet.gsheetId;
   const valueInputOption = 'USER_ENTERED';
   const resource = {
     values: [[data._id, data.name, data.email, data.mobile, data.branch, data.registrationNumber]],
@@ -19,7 +20,7 @@ export const updateSheet = async (data) => {
   const emptyRowNumber = lastRow.data.values.length + 1;
   const range = `A${emptyRowNumber}`;
 
-  const response = await googleSheets.spreadsheets.values.update({
+  await googleSheets.spreadsheets.values.update({
     spreadsheetId,
     range,
     valueInputOption,
