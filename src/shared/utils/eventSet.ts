@@ -15,7 +15,8 @@ const eventSetSchema = z.object({
         },
         { message: "Invalid date format" }
       ),
-      sheetNo: z.number().min(0),
+      registrationCloseHours: z.number().min(0).optional(),
+      onspotStartsHours: z.number().min(0).optional(),
     })
   ),
 });
@@ -35,6 +36,9 @@ export const setEventConfig = async () => {
     );
   }
   const eventInfo = await collection.findOne({ name: eventName });
+  if (!eventInfo) {
+    throw new Error(`Event with name ${eventName} not found`);
+  }
   eventSetSchema.parseAsync(eventInfo);
   config.eventSet = eventInfo;
   return eventInfo.events.map((event) => event.name);

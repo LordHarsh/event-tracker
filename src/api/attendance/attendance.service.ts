@@ -14,7 +14,7 @@ export const attendStartService = async (id: string, email: string, event: any):
     }
     await collection.updateOne({ _id: new ObjectId(id), email: email },  { $set: { presentStart: true } });
     const data = await collection.findOne({ _id: new ObjectId(id), email: email });
-    await updateSheet(data);
+    await updateSheet(event, data);
     return
 };
 

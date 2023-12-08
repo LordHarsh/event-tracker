@@ -1,17 +1,14 @@
 import { Request, Response, NextFunction } from "express";
-import database from "../../loaders/mongo";
 import config from "../../config";
 
 export async function checkEvent(req: Request, res: Response, next: NextFunction) {
     try {
-        const collection = (await database()).collection(config.collectionName);
-        const event = await collection.findOne({ "name": config.eventSetName, "events.name": req.params.eventName }, {
-            projection: { _id: 0, 'events.$': 1 }
-        });
-        if (!event) {
-            throw new Error('Event not found');
+        const eventSet = config.eventSet;
+        const event = eventSet.events.find((event) => event.name === req.params.eventName);
+        if (!event){
+            throw new Error("Event does not exist or has ended");
         }
-        req.body.event = event.events[0];
+        res.locals.event = event;
         next();
     } catch (error) {
         next(error);

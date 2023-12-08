@@ -3,7 +3,7 @@ import { attendStartService, getCountService } from './attendance.service';
 
 export const attendStart = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-        const event = req.body.event;
+        const event = res.locals.event;
         await attendStartService(req.body.id, req.body.email, event);
         res.status(200).json({
             success: true,
@@ -17,7 +17,7 @@ export const attendStart = async (req: Request, res: Response, next: NextFunctio
 
 export const getCount = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-        const event = req.body.event;
+        const event = res.locals.event;
         const count = await getCountService(event);
         res.status(200).json({
             success: true,

@@ -13,6 +13,7 @@ export default async ({ expressApp}: { expressApp: Express.Application }): Promi
     await getKeys();
     LoggerInstance.info("Google Keys Loaded");
     const [numEvents, events] = await getEventInfo();
-    LoggerInstance.info(`Loaded ${numEvents} events` + "🚀 ~ " + events + " ~ 🚀 ")
+    LoggerInstance.info(`Loaded ${numEvents} events`)
+    LoggerInstance.info("🚀 ~ " + events + " ~ 🚀 ")
     LoggerInstance.info("All modules loaded!");
 };

@@ -5,8 +5,7 @@ dotenv.config();
 export default {
     port: parseInt(process.env.PORT as string, 10) || 3000,
     databaseUrl: process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/events',
-    collectionName: process.env.COLLECTION_NAME|| 'how to manually enter time in mongodb compass',
-    eventSetName: process.env.EVENT_SET_NAME || 'test-fest',
+    collectionName: process.env.COLLECTION_NAME|| 'eventSets',
     jwtSecret: process.env.JWT_SECRET,
     eventSet: undefined,
     logs: {
