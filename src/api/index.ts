@@ -8,7 +8,7 @@ import refreshRouter from "./refresh/refresh.router";
 export default (): Router => {
     const app = Router();
     app.use('/test', testRouter());
-    app.use('/:eventName/attandance', checkEvent, attendanceRouter());
+    app.use('/:eventName/attendance', checkEvent, attendanceRouter());
     app.use('/:eventName/register', checkEvent, registerRouter());
     app.use('/refresh', refreshRouter());
     return app;

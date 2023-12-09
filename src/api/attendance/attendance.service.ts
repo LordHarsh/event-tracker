@@ -1,10 +1,13 @@
 import { ObjectId } from 'mongodb';
 import database from '../../loaders/mongo';
-import config from "../../config";
 import { updateSheet } from '../../shared/utils/gsheets';
 
-export const attendStartService = async (id: string, email: string, event: any): Promise<void> => {
+export const attendStartService = async (id: string, email: string, event): Promise<void> => {
     const collection = (await database()).collection(event.name+"-registrations");
+    const timeDifference = ((new Date(event.time)).getTime() - (((new Date()).getTime()) + (1000 * 60 * 60 * 5.5))) / (1000 * 60 * 60);
+    if(timeDifference >=  3){
+        throw new Error(`Attendance not started for ${event.name}`);
+    }
     const exists = await collection.findOne({ _id: new ObjectId(id), email: email });
     if (!exists) {
         throw new Error('Not in database');
@@ -18,7 +21,7 @@ export const attendStartService = async (id: string, email: string, event: any):
     return
 };
 
-export const getCountService = async (event: any): Promise<number> => {
+export const getCountService = async (event): Promise<number> => {
     const collection = (await database()).collection(event.name+"-registrations");
     const count = (await collection.find({ presentStart: true }).toArray()).length;
     return count;

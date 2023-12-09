@@ -15,6 +15,7 @@ const eventSetSchema = z.object({
         },
         { message: "Invalid date format" }
       ),
+      venue: z.string(),
       registrationCloseHours: z.number().min(0).optional(),
       onspotStartsHours: z.number().min(0).optional(),
     })

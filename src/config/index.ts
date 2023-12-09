@@ -17,5 +17,14 @@ export default {
     sheets: {
         key_url: process.env.SHEETS_KEY_URL,
         key_path: process.env.KEY_PATH,
-    }
+    },
+    aws: {
+        from: process.env.FROM_EMAIL,
+        reply: process.env.REPLY_EMAIL,
+        region: process.env.AWS_REGION,
+        email_domain: process.env.EMAIL_DOMAIN,
+        accessKeyId: process.env.AWS_ACCESS_KEY_ID!,
+        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY!,
+        
+    },
 }
