@@ -1,10 +1,10 @@
 {
-  "name": "project-name-here",
+  "name": "event-tracker",
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "tsc-watch --onSuccess \"node ./build/index.js\"",
-    "build": "tsc",
+    "dev": "NODE_OPTIONS=--max_old_space_size=4096 tsc-watch --onSuccess \"node ./build/index.js\"",
+    "build": "NODE_OPTIONS=--max_old_space_size=4096 tsc",
     "start": "node ./build/index.js",
     "lint": "eslint . --ext .ts"
   },

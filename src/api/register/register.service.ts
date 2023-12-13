@@ -1,6 +1,6 @@
 import database from '../../loaders/mongo';
 import { updateSheet } from '../../shared/utils/gsheets';
-import { sendThankyouMail } from '../../shared/utils/sendMail';
+// import { sendThankyouMail } from '../../shared/utils/sendMail';
 
 export const registerService = async (email: string, name: string, registrationNumber: string, branch: string, mobile: string, event): Promise<void> => {
     const collection = (await database()).collection(event.name+"-registrations");
@@ -17,7 +17,7 @@ export const registerService = async (email: string, name: string, registrationN
     }
     await collection.insertOne({ email, name, registrationNumber, branch, mobile });
     const user = await collection.findOne({ email });
-    await sendThankyouMail(event, user)
+    // await sendThankyouMail(event, user)
     return;
 }
 
