@@ -1,5 +1,6 @@
 import winston from 'winston';
 import config from '../config';
+import {MongoDB} from "winston-mongodb";
 
 const transports = [];
 if (process.env.NODE_ENV !== 'development') {
@@ -11,6 +12,21 @@ if (process.env.NODE_ENV !== 'development') {
     }),
   );
 }
+
+
+transports.push(new MongoDB({
+  db: config.databaseUrl,
+  options: { useNewUrlParser: true, useUnifiedTopology: true },
+  collection: 'logs',
+  format: winston.format.combine(
+    winston.format.timestamp({
+      format: 'YYYY-MM-DD HH:mm:ss',
+    }),
+    winston.format.errors({ stack: true }),
+    winston.format.splat(),
+    winston.format.json(),
+  ),
+}));
 
 const LoggerInstance = winston.createLogger({
   level: config.logs.level,
