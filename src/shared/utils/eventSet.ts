@@ -1,6 +1,7 @@
 import database from "../../loaders/mongo";
 import config from "../../config";
 import z from "zod";
+import LoggerInstance from "../../loaders/logger";
 
 const eventSetSchema = z.object({
   name: z.string(),
@@ -8,16 +9,12 @@ const eventSetSchema = z.object({
   events: z.array(
     z.object({
       name: z.string(),
-      time: z.string().refine(
-        (dateString) => {
-          const parsedDate = new Date(dateString);
-          return !isNaN(parsedDate.getTime());
-        },
-        { message: "Invalid date format" }
-      ),
+      time: z.date(),
       venue: z.string(),
       registrationCloseHours: z.number().min(0).optional(),
-      onspotStartsHours: z.number().min(0).optional(),
+      rsvp: z.boolean().optional(),
+      maxRSVP: z.number().min(0).optional(),
+      rsvpMailHoursBefore: z.number().min(0).optional(),
     })
   ),
 });
@@ -40,7 +37,22 @@ export const setEventConfig = async () => {
   if (!eventInfo) {
     throw new Error(`Event with name ${eventName} not found`);
   }
+  for (const event of eventInfo.events) {
+    LoggerInstance.info(`Setting up ${event.name} at ${event.time.toLocaleString('en-IN', { timeZone: 'IST' })}...`);
+    if (event.rsvp && !(event.rsvpMailHoursBefore>=3)) {
+      throw new Error(`RSVP is enabled for ${event.name} but rsvpMailHoursBefore is not set (should be >=3)`);
+    } else {
+      event.rsvp = false;
+      event.rsvpMailHoursBefore = 0;
+    }
+    if (!event.registrationCloseHours) {
+      event.registrationCloseHours = 0;
+    }
+  }
   eventSetSchema.parseAsync(eventInfo);
+  await collection.updateOne({ name: eventName }, { $set: {"events": eventInfo.events, "refreshedAt": new Date()} });
+  
+  console.log(eventInfo);
   config.eventSet = eventInfo;
   return eventInfo.events.map((event) => event.name);
 };
