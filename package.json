@@ -9,6 +9,8 @@
     "lint": "eslint . --ext .ts"
   },
   "dependencies": {
+    "@trigger.dev/express": "^2.3.6",
+    "@trigger.dev/sdk": "^2.3.6",
     "@types/react": "18.2.21",
     "@types/react-dom": "18.2.7",
     "@types/winston": "^2.4.4",
@@ -41,5 +43,8 @@
     "@typescript-eslint/eslint-plugin": "^6.6.0",
     "@typescript-eslint/parser": "^6.6.0",
     "tsc-watch": "^6.0.4"
-  }
+  },
+  "trigger.dev": {
+    "endpointId": "event-tracker-uYlJ"
+  }  
 }

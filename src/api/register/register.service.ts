@@ -1,6 +1,6 @@
 import database from '../../loaders/mongo';
+import { client } from '../../shared/middlewares/trigger';
 import { updateSheet } from '../../shared/utils/gsheets';
-import { sendThankyouMail } from '../../shared/utils/sendMail';
 
 export const registerService = async (email: string, name: string, registrationNumber: string, branch: string, mobile: string, event): Promise<void> => {
     const collection = (await database()).collection(event.name+"-registrations");
@@ -14,11 +14,15 @@ export const registerService = async (email: string, name: string, registrationN
     const exists = await collection.findOne({ email: email });
     if (exists) {  
         await collection.updateOne({ email: email }, { $set: { name, registrationNumber, branch, mobile } });
-        return;
+    } else {
+        await collection.insertOne({ email, name, registrationNumber, branch, mobile, rsvpStatus: false, registerAt: new Date(), rsvpAt: null, presentStart: false });
     }
-    await collection.insertOne({ email, name, registrationNumber, branch, mobile, rsvpStatus: false, registerAt: new Date(), rsvpAt: null, presentStart: false });
     const user = await collection.findOne({ email });
-    await sendThankyouMail(event, user)
+    const res = await client.sendEvent({
+        name: "send-single-mail",
+        payload: { user, event },
+      });
+    console.log(res);
     return;
 }
 

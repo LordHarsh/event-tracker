@@ -51,8 +51,6 @@ export const setEventConfig = async () => {
   }
   eventSetSchema.parseAsync(eventInfo);
   await collection.updateOne({ name: eventName }, { $set: {"events": eventInfo.events, "refreshedAt": new Date()} });
-  
-  console.log(eventInfo);
   config.eventSet = eventInfo;
   return eventInfo.events.map((event) => event.name);
 };

@@ -27,4 +27,8 @@ export default {
         secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY!,
         
     },
+    trigger: {
+        apiKey: process.env.TRIGGER_API_KEY!,
+        apiUrl: process.env.TRIGGER_API_URL!,
+    },
 }

@@ -65,6 +65,7 @@ const sendEmail = async (event, user, htmlBuffer, textBuffer, subject, mailType)
       user.email
     );
     const request = ses.sendEmail(mail);
+    console.log(`Email sent to ${user.email}.\nMail type: ${mailType}`);
     return request.promise();
   } catch (error) {
     LoggerInstance.error(
