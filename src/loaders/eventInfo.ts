@@ -1,5 +1,5 @@
 import { sys } from "typescript";
-import { setEventConfig } from "../shared/utils/eventSet"
+import { setEventConfig } from "../shared/utils/eventGroup"
 import LoggerInstance from "./logger";
 
 export const getEventInfo = async () => {

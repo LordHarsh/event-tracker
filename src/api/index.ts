@@ -5,11 +5,13 @@ import { checkEvent } from "../shared/middlewares/checkEvent";
 import refreshRouter from "./refresh/refresh.router";
 import rsvpRouter from "./rsvp/rsvp.router";
 import authRouter from "./auth/auth.router";
+import eventRouter from "./event/event.router";
 
 export default (): Router => {
   const app = Router();
   app.use("/refresh", refreshRouter());
   app.use("/auth", authRouter());
+  app.use("/event", eventRouter());
   app.use("/attendance", attendanceRouter());
   app.use("/register", registerRouter());
   app.use("/rsvp", checkEvent, rsvpRouter());

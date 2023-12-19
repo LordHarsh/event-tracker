@@ -2,6 +2,7 @@ import { LoginUser, SignupUser } from "./auth.schema";
 import database from "../../loaders/mongo";
 import bcrypt from "bcrypt";
 import generateToken from "../../shared/jwt";
+import LoggerInstance from "../../loaders/logger";
 
 export const signupService = async (user: SignupUser): Promise<void> => {
   const collection = (await database()).collection("users");
@@ -24,6 +25,7 @@ export const signupService = async (user: SignupUser): Promise<void> => {
     verifiedBy: null,
     isDeleted: false,
   });
+  LoggerInstance.info(`User: ${user.name} with email: ${user.email} signed up`);
   return;
 };
 
@@ -37,6 +39,7 @@ export const loginService = async (user: LoginUser): Promise<unknown> => {
   if (!match) {
     throw new Error("Incorrect password / email");
   }
+  LoggerInstance.info(`User: ${exists.name} with email: ${exists.email} logged in`);
   return {
     name: exists.name,
     email: exists.email,

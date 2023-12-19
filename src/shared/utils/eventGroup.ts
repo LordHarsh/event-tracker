@@ -11,10 +11,8 @@ const eventSetSchema = z.object({
       name: z.string(),
       time: z.date(),
       venue: z.string(),
-      registrationCloseHours: z.number().min(0).optional(),
-      rsvp: z.boolean().optional(),
-      maxRSVP: z.number().min(0).optional(),
-      rsvpMailHoursBefore: z.number().min(0).optional(),
+      themeColor: z.string(),
+      registrationCloseHours: z.number().min(3).optional().default(3),
     })
   ),
 });
@@ -38,9 +36,15 @@ export const setEventConfig = async () => {
     throw new Error(`Event with name ${eventName} not found`);
   }
   for (const event of eventInfo.events) {
-    LoggerInstance.info(`Setting up ${event.name} at ${event.time.toLocaleString('en-IN', { timeZone: 'IST' })}...`);
-    if (event.rsvp && !(event.rsvpMailHoursBefore>=3)) {
-      throw new Error(`RSVP is enabled for ${event.name} but rsvpMailHoursBefore is not set (should be >=3)`);
+    LoggerInstance.info(
+      `Setting up ${event.name} at ${event.time.toLocaleString("en-IN", {
+        timeZone: "IST",
+      })}...`
+    );
+    if (event.rsvp && !(event.rsvpMailHoursBefore >= 3)) {
+      throw new Error(
+        `RSVP is enabled for ${event.name} but rsvpMailHoursBefore is not set (should be >=3)`
+      );
     } else {
       event.rsvp = false;
       event.rsvpMailHoursBefore = 0;
@@ -50,9 +54,11 @@ export const setEventConfig = async () => {
     }
   }
   eventSetSchema.parseAsync(eventInfo);
-  await collection.updateOne({ name: eventName }, { $set: {"events": eventInfo.events, "refreshedAt": new Date()} });
-  
-  console.log(eventInfo);
+  await collection.updateOne(
+    { name: eventName },
+    { $set: { events: eventInfo.events, refreshedAt: new Date() } }
+  );
+
   config.eventSet = eventInfo;
   return eventInfo.events.map((event) => event.name);
 };
