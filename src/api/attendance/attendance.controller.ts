@@ -4,7 +4,7 @@ import { attendStartService, getCountService } from './attendance.service';
 export const attendStart = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const event = res.locals.event;
-        await attendStartService(req.body.id, req.body.email, event);
+        await attendStartService(req.body.id, req.body.email, event, res.locals.user);
         res.status(200).json({
             success: true,
             message: 'Marked Present',

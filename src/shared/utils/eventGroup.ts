@@ -12,7 +12,6 @@ const eventSetSchema = z.object({
       time: z.date(),
       venue: z.string(),
       themeColor: z.string(),
-      registrationCloseHours: z.number().min(3).optional().default(3),
     })
   ),
 });

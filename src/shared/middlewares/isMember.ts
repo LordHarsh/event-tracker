@@ -7,7 +7,7 @@ export default function isMember() {
     next: NextFunction
   ): Promise<void> => {
     try {
-      if (res.locals.user.permissons !== "member") {
+      if (res.locals.user.permissons !== "member" && res.locals.user.permissons !== "admin") {
         throw { statusCode: 401, message: "Unauthorized" };
       }
       next();

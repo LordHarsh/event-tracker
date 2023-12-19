@@ -15,7 +15,7 @@ export const createEventService = async (user,  event): Promise<unknown> => {
         time: event.time,
         venue: event.venue,
         themeColor: event.themeColor,
-        registrationCloseHours: event.registrationCloseHours,
+        registrationClosed: false,
         sendingRSVPMails: false,
         sendingQRMails: false,
         onspotLimit: 0,

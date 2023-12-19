@@ -7,7 +7,6 @@ export const createEventSchema = z.object({
     }),
   venue: z.string(),
   themeColor: z.string(),
-  registrationCloseHours: z.number().min(3).optional().default(3),
 //   rsvp: z.boolean().optional(),
 //   maxRSVP: z.number().min(0).optional(),
 //   rsvpMailHoursBefore: z.number().min(0).optional(),
